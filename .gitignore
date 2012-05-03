@@ -1,0 +1,5 @@
+ebin
+exbin
+erl_crash.dump
+*.sw?
+rebar
