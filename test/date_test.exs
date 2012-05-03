@@ -5,11 +5,11 @@ defmodule DateTest do
 
   test :store_each_date_part do
     date = Date.new("2011-01-01 12:35:48")
-    assert "2011" == date.year
-    assert "01" == date.month
-    assert "01" == date.day
-    assert "12" == date.hour
-    assert "35" == date.minute
-    assert "48" == date.second
+    assert 2011 == date.year
+    assert    1 == date.month
+    assert    1 == date.day
+    assert   12 == date.hour
+    assert   35 == date.minute
+    assert   48 == date.second
   end
 end

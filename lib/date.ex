@@ -1,3 +1,4 @@
+refer Erlang.calendar, as: Calendar
 
 defmodule Date do
   @moduledoc """
@@ -25,14 +26,34 @@ defmodule Date do
     destructure [ _, year, month, day, _, hour, minute, second ], Regex.run(regex, string)
 
     info = Date.Info[
-      year:   year,
-      month:  month,
-      day:    day,
-      hour:   hour,
-      minute: minute,
-      second: second
+      year:   to_year(year),
+      month:  to_month(month),
+      day:    to_day(day),
+      hour:   to_hour(hour),
+      minute: to_minute(minute),
+      second: to_second(second)
     ]
 
     info
   end
+
+  defp to_year(s) when is_binary(s), do: to_integer(s)
+  defp to_year(x) when x >= 0, do: x
+  
+  defp to_month(s) when is_binary(s), do: to_integer(s)
+  defp to_month(x) when x >= 1 and x <= 12, do: x
+
+  defp to_day(s) when is_binary(s), do: to_integer(s)
+  defp to_day(x) when x >= 1 and x <= 31, do: x
+
+  defp to_hour(s) when is_binary(s), do: to_integer(s)
+  defp to_hour(x) when x >= 0 and x <= 23, do: x
+  
+  defp to_minute(s) when is_binary(s), do: to_integer(s)
+  defp to_minute(x) when x >= 0 and x <= 59, do: x
+  
+  defp to_second(s) when is_binary(s), do: to_integer(s)
+  defp to_second(x) when x >= 0 and x <= 59, do: x
+
+  defp to_integer(s), do: list_to_integer(binary_to_list(s))
 end
