@@ -59,4 +59,9 @@ defmodule Date.AddTest do
     assert expected_date == result_date
   end
 
+  test :return_now do
+    now = Date.now
+
+    assert Date.is_valid_date?(now.as_tuple)
+  end
 end

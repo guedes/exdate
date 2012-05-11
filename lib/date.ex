@@ -108,9 +108,21 @@ defmodule Date do
       Date.is_valid_date? "2013-02-29"  #=> false
       Date.is_valid_date? "2000-01-35"  #=> false
   """
-  def is_valid_date?(string) when is_binary(string) do
-    date = Date.new(string)
+  def is_valid_date?(date) when is_tuple(date) or is_binary(date) do
+    date = Date.new(date)
     Calendar.valid_date(date.as_tuple[1])
+  end
+
+  def is_valid_date?(_), do: false
+
+  @doc """
+  Returns actual localtime.
+
+     now = Date.now
+     #=> "2012-05-11 22:23:50"
+  """
+  def now() do
+    Date.new(Calendar.local_time)
   end
 
   # private
