@@ -1,6 +1,6 @@
 Code.require_file "../test_helper.exs", __FILE__
 
-defmodule DateTest do
+defmodule Date.AddTest do
   use ExUnit.Case
 
   test :store_each_date_part do
@@ -12,4 +12,33 @@ defmodule DateTest do
     assert   35 == date.minute
     assert   48 == date.second
   end
+
+  test :adds_3_seconds do
+    date = Date.new("2011-10-12 14:15:58")
+    date_expected = Date.new("2011-10-12 14:16:01")
+
+    assert date_expected == Date.add date, 3, :seconds
+  end
+
+  test :adds_30_minutes do
+    date = Date.new("2011-11-13 10:12:58")
+    date_expected = Date.new("2011-11-13 10:42:58")
+
+    assert date_expected == Date.add date, 30, :minutes
+  end
+
+  test :adds_5_hours do
+    date = Date.new("2012-10-13 20:12:58")
+    date_expected = Date.new("2012-10-14 1:12:58")
+
+    assert date_expected == Date.add date, 5, :hours
+  end
+
+  test :adds_2_days do
+    date = Date.new("2012-02-28 1:12:58")
+    date_expected = Date.new("2012-03-01 1:12:58")
+
+    assert date_expected == Date.add date, 2, :days
+  end
+
 end
