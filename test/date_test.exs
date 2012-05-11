@@ -51,4 +51,12 @@ defmodule Date.AddTest do
     refute Date.is_valid_date? "2000-01-35"
   end
 
+  test :more_complex_interval do
+    date = Date.new("1992-02-18 03:10:20")
+    expected_date = Date.new("1992-02-28 05:13:50")
+    result_date = Date.add date, days: 10, hours: 2, minutes: 3, seconds: 30
+
+    assert expected_date == result_date
+  end
+
 end

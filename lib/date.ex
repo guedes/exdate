@@ -53,12 +53,12 @@ defmodule Date do
   end
 
   @doc """
-  Adds an interval to a date-time
+  Returns the given date plus `n` seconds.
 
   ## Examples
 
       date = Date.new("2011-11-13 10:12:58")
-      result = Date.add date, 30, :minutes
+      date = Date.add date, 30, :minutes
       #=> "2011-11-13 10:42:58"
 
   """
@@ -80,6 +80,22 @@ defmodule Date do
   end
 
   @doc """
+  Allows more date time computation in a single line.
+
+  ## Examples
+
+      date = Date.new("1992-02-18 03:10:20")
+      date = Date.add date, days: 10, hours: 2, minutes: 3, seconds: 30
+      #=> "1992-02-28 05:13:50"
+
+  """
+  def add(date, values) when is_list(values) do
+    Enum.reduce values, date, fn(v, d) ->
+      add(d, v[2], v[1])
+    end
+  end
+
+  @doc """
   Returns true if the given date time is valid
 
   ## Examples
@@ -97,6 +113,7 @@ defmodule Date do
     Calendar.valid_date(date.as_tuple[1])
   end
 
+  # private
   defp to_year(s) when is_binary(s), do: to_integer(s)
   defp to_year(x) when x >= 0, do: x
 
