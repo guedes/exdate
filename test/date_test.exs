@@ -41,4 +41,14 @@ defmodule Date.AddTest do
     assert date_expected == Date.add date, 2, :days
   end
 
+  test :is_valid_date do
+    assert Date.is_valid_date? "2012-02-28"
+    assert Date.is_valid_date? "1010-07-02"
+    assert Date.is_valid_date? "1010-7-2"
+
+    refute Date.is_valid_date? "2012-13-2"
+    refute Date.is_valid_date? "2013-02-29"
+    refute Date.is_valid_date? "2000-01-35"
+  end
+
 end

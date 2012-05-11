@@ -79,6 +79,24 @@ defmodule Date do
     add(date, n*24, :hours)
   end
 
+  @doc """
+  Returns true if the given date time is valid
+
+  ## Examples
+
+      Date.is_valid_date? "2012-02-28"  #=> true
+      Date.is_valid_date? "1010-07-02"  #=> true
+      Date.is_valid_date? "1010-7-2"    #=> true
+
+      Date.is_valid_date? "2012-13-2"   #=> false
+      Date.is_valid_date? "2013-02-29"  #=> false
+      Date.is_valid_date? "2000-01-35"  #=> false
+  """
+  def is_valid_date?(string) when is_binary(string) do
+    date = Date.new(string)
+    Calendar.valid_date(date.as_tuple[1])
+  end
+
   defp to_year(s) when is_binary(s), do: to_integer(s)
   defp to_year(x) when x >= 0, do: x
 
@@ -90,12 +108,15 @@ defmodule Date do
 
   defp to_hour(s) when is_binary(s), do: to_integer(s)
   defp to_hour(x) when x >= 0 and x <= 23, do: x
+  defp to_hour(nil), do: 0
 
   defp to_minute(s) when is_binary(s), do: to_integer(s)
   defp to_minute(x) when x >= 0 and x <= 59, do: x
+  defp to_minute(nil), do: 0
 
   defp to_second(s) when is_binary(s), do: to_integer(s)
   defp to_second(x) when x >= 0 and x <= 59, do: x
+  defp to_second(nil), do: 0
 
   defp to_integer(s), do: list_to_integer(binary_to_list(s))
 end
