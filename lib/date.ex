@@ -108,9 +108,21 @@ defmodule Date do
       Date.is_valid_date? "2013-02-29"  #=> false
       Date.is_valid_date? "2000-01-35"  #=> false
   """
-  def is_valid_date?(date) when is_tuple(date) or is_binary(date) do
-    date = Date.new(date)
-    Calendar.valid_date(date.as_tuple[1])
+  def is_valid_date?(date) when is_record(date, Date.Info) do
+    is_valid_date?(date.as_tuple[1])
+  end
+
+  def is_valid_date?({date, _}) when is_tuple(date) do
+    is_valid_date?(date)
+  end
+
+  def is_valid_date?(date) when is_tuple(date) do
+    Calendar.valid_date(date)
+  end
+
+  def is_valid_date?(date) when is_binary(date) do
+    date = Date.new(date).as_tuple[1]
+    is_valid_date?(date)
   end
 
   def is_valid_date?(_), do: false
