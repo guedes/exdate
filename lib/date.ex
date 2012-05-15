@@ -177,6 +177,8 @@ defmodule Date do
       left_zeroes(date.minute)
     match: ?S
       left_zeroes(date.second)
+    else:
+      mod
     end
 
     "#{value}"

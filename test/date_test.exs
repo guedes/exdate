@@ -99,5 +99,12 @@ defmodule DateTest do
 
     assert expected_formated_date == Date.format(date, "%Y%m%d%H%M%S")
   end
+  
+  test :date_to_timestamp_with_chars do
+    date = Date.new("2000-01-01 23:59:59")
+    expected_formated_date = "2000-01-01 23:59:59"
+
+    assert expected_formated_date == Date.format(date, "%Y-%m-%d %H:%M:%S")
+  end
 
 end
