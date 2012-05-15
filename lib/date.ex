@@ -87,7 +87,6 @@ defmodule Date do
       date = Date.new("1992-02-18 03:10:20")
       date = Date.add date, days: 10, hours: 2, minutes: 3, seconds: 30
       #=> "1992-02-28 05:13:50"
-
   """
   def add(date, values) when is_list(values) do
     Enum.reduce values, date, fn(v, d) ->
@@ -130,14 +129,63 @@ defmodule Date do
   @doc """
   Returns actual localtime.
 
-     now = Date.now
-     #=> "2012-05-11 22:23:50"
+  ## Examples
+
+      now = Date.now
+      #=> "2012-05-11 22:23:50"
   """
   def now() do
     Date.new(Calendar.local_time)
   end
 
+  @doc """
+  Returns a formatted string from a Date
+
+  ## Examples
+
+      date = Date.new("2000-01-01 23:59:59")
+      Date.format(date, "%Y-%m-%d %H:%M:%S")
+      #=> "2000-01-01 23:59:59"
+  """
+  def format(date, pattern) when is_record(date, Date.Info) and is_binary(pattern) do
+    parse_format(date, pattern)
+  end
+
   # private
+
+  defp parse_format(date, <<?%,mod,rest|:binary>>) do
+    mod2date(date,mod) <> parse_format(date, rest)
+  end
+
+  defp parse_format(date, <<char,rest|:binary>>) do
+    "#{char}" <> parse_format(date, rest)
+  end
+
+  defp parse_format(date, <<>>), do: <<>>
+
+  defp mod2date(date,mod) do
+    value = case mod do
+    match: ?Y
+      date.year
+    match: ?m
+      left_zeroes(date.day)
+    match: ?d
+      left_zeroes(date.day)
+    match: ?H
+      left_zeroes(date.hour)
+    match: ?M
+      left_zeroes(date.minute)
+    match: ?S
+      left_zeroes(date.second)
+    end
+
+    "#{value}"
+  end
+
+  defp left_zeroes(v) do
+    to_binary(:string.right(integer_to_list(v), 2, ?0))
+  end
+
   defp to_year(s) when is_binary(s), do: to_integer(s)
   defp to_year(x) when x >= 0, do: x
 
