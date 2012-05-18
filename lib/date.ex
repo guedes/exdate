@@ -158,7 +158,7 @@ defmodule Date do
   end
 
   defp parse_format(date, <<char,rest|:binary>>) do
-    "#{char}" <> parse_format(date, rest)
+    <<char>> <> parse_format(date, rest)
   end
 
   defp parse_format(date, <<>>), do: <<>>
@@ -178,7 +178,7 @@ defmodule Date do
     match: ?S
       left_zeroes(date.second)
     else:
-      mod
+      <<mod>>
     end
 
     "#{value}"
