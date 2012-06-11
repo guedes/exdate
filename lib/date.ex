@@ -161,21 +161,21 @@ defmodule Date do
     "#{char}" <> parse_format(date, rest)
   end
 
-  defp parse_format(date, <<>>), do: <<>>
+  defp parse_format(_date, <<>>), do: <<>>
 
   defp mod2date(date,mod) do
     value = case mod do
-    match: ?Y
+    ?Y ->
       date.year
-    match: ?m
+    ?m ->
       left_zeroes(date.day)
-    match: ?d
+    ?d ->
       left_zeroes(date.day)
-    match: ?H
+    ?H ->
       left_zeroes(date.hour)
-    match: ?M
+    ?M ->
       left_zeroes(date.minute)
-    match: ?S
+    ?S ->
       left_zeroes(date.second)
     end
 
