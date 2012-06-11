@@ -1,11 +1,11 @@
-refer Erlang.calendar, as: Calendar
+alias Erlang.calendar, as: Calendar
 
 defmodule Date do
   @moduledoc """
   This module provides facilities to work with Date and Time
   """
 
-  defrecord Info, year: 1, month: 1, day: 1, hour: 0, minute: 0, second:0, milisecond: 0.0, as_tuple: {{0,0,0},{0,0,0}}
+  defrecord Info, year: 1, month: 1, day: 1, hour: 0, minute: 0, second: 0, milisecond: 0.0, as_tuple: {{0,0,0},{0,0,0}}
 
   @doc """
   Returns a Date record.
