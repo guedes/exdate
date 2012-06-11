@@ -1,6 +1,6 @@
 Code.require_file "../test_helper.exs", __FILE__
 
-defmodule Date.AddTest do
+defmodule DateTest do
   use ExUnit.Case
 
   test :store_each_date_part do
@@ -85,4 +85,19 @@ defmodule Date.AddTest do
 
     assert Date.is_valid_date?(now)
   end
+
+  test :date_format_only_modfiers do
+    date = Date.new("2000-01-01 23:59:59")
+    expected_formated_date = "20000101"
+
+    assert expected_formated_date == Date.format(date, "%Y%m%d")
+  end
+
+  test :date_to_timestamp do
+    date = Date.new("2000-01-01 23:59:59")
+    expected_formated_date = "20000101235959"
+
+    assert expected_formated_date == Date.format(date, "%Y%m%d%H%M%S")
+  end
+
 end
